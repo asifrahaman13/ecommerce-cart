@@ -54,6 +54,7 @@ user_signup_router.post("/signup", async (req, res) => {
 
 // Login API
 user_signup_router.post("/login", async (req, res) => {
+    console.log(req.body)
     try {
         // Extract the email and the password from the body.
         var { email, password } = req.body;
@@ -103,7 +104,9 @@ user_signup_router.post("/login", async (req, res) => {
                 });
             }
         } catch (err) {
-            return res.send({ message: "sorry no such user exits" });
+            return res
+            .status(401)
+            .json({ success: false, message: "Incorrect email or password." });
         }
     } catch (error) {
         console.error("Error in /login:", error);
