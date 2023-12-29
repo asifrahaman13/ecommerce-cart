@@ -8,8 +8,10 @@ import jwt from "jsonwebtoken";
 // Load environment variables from .env file
 config();
 
+// Get the secret key from the environment variable.
 const SECRET_KEY = process.env.SECRET_KEY;
 
+// Crete a router for the authentication of the users.
 const user_signup_router = express.Router();
 
 user_signup_router.post("/signup", async (req, res) => {

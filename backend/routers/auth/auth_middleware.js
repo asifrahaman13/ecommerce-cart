@@ -1,4 +1,3 @@
-import { User } from "../../schemas/schemas.js";
 // Import the required libraries
 import jwt from "jsonwebtoken";
 import { config } from "dotenv";
@@ -7,6 +6,7 @@ config();
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
+// Middleware to check if the user has registered in the application.
 const checkUserRegistration = async (req, res, next) => {
     try {
         const accessToken = req.headers.authorization;  // Assuming the email is sent in the request body

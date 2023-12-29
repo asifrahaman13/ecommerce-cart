@@ -13,7 +13,7 @@ const productData = new Schema({
     category: {
         type: String,
     },
-    image:{
+    image: {
         type: String,
     }
 });
@@ -64,4 +64,4 @@ const Product = model('users_products', productSchema)
 const SingleProduct = model('single_products', productData)
 
 // Export the user schema.
-export { User, Product,SingleProduct };
+export { User, Product, SingleProduct };

@@ -25,7 +25,7 @@ const Products = () => {
     }
 
     fetchProducts();
-  }, []);
+  }, [products]);
 
   const addToCart = async () => {
     try {
@@ -52,7 +52,7 @@ const Products = () => {
       if (response.status == 200) {
         setSuccessEvent({
           status: 200,
-          message: "The item has been purchased successfully"
+          message: "The item has been  successfully added to the cart"
         })
       }
       console.log('Selected products added to the cart');
@@ -81,7 +81,7 @@ const Products = () => {
             <div className="ml-3">
               <h3 className="text-sm font-medium text-green-800">Order completed</h3>
               <div className="mt-2 text-sm text-green-700">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid pariatur, ipsum similique veniam.</p>
+                <p>{successEvent.message}</p>
               </div>
               <div className="mt-4">
                 <div className="-mx-2 -my-1.5 flex">
@@ -94,7 +94,7 @@ const Products = () => {
                   <button
                     type="button"
                     className="ml-3 rounded-md bg-green-50 px-2 py-1.5 text-sm font-medium text-green-800 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50"
-                    onClick={(e)=>{setSuccessEvent({status:0, message:""})}}
+                    onClick={(e) => { setSuccessEvent({ status: 0, message: "" }) }}
                   >
                     Dismiss
                   </button>
@@ -106,12 +106,9 @@ const Products = () => {
       )}
 
 
-
-
-
       <div className="bg-white">
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2>
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900">List of products available</h2>
 
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             {products?.map((product) => (
@@ -134,7 +131,7 @@ const Products = () => {
                       </h3>
                       <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                     </div>
-                    <p className="text-sm font-medium text-gray-900">{product.price}</p>
+                    <p className="text-sm font-medium text-gray-900">₹{product.price}</p>
                   </div>
                 </NavLink>
                 <input

@@ -1,8 +1,12 @@
 import axios from "axios"
 
+// Function to get all the products from the backend API.
 async function getProducts() {
     try {
+        // Call the backend API to get all the products available.
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_PORT}/products/products`);
+
+        // Send the the data.
         return response.data
     } catch (e) {
         console.log("Error")
@@ -10,8 +14,10 @@ async function getProducts() {
 }
 
 async function getCartItems() {
+    // Get the access token from the local storage.
     const accessToken = localStorage.getItem('access_token');
     try {
+        // Get all the cart items of the user.
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_PORT}/products/all-cart-items`,
             {
                 headers: {
@@ -20,15 +26,22 @@ async function getCartItems() {
                 },
             }
         );
+
+        // Return the cart item data. 
         return response.data
     } catch (e) {
         console.log("Error")
     }
 }
 
+// Function to get information about a single product using the id. 
 async function getProduct(id) {
+    
     try {
+        // Call the backend API to fetch the single product information.
         const response = await axios.post(`${process.env.REACT_APP_BACKEND_PORT}/products/product-details`, { id: id });
+
+        // Send the data.
         return response.data
     } catch (e) {
         console.log("Error")
@@ -36,8 +49,9 @@ async function getProduct(id) {
 }
 
 async function placeOrder(id, title, category, setSuccess) {
-    console.log(id, title, category);
+  // Get the access token from the local storage.
     const accessToken = localStorage.getItem('access_token');
+
     try {
         const response = await axios.post(`${process.env.REACT_APP_BACKEND_PORT}/products/product-order`, { id: id, title: title, category: category }, {
             headers: {
@@ -45,29 +59,43 @@ async function placeOrder(id, title, category, setSuccess) {
                 // Add other headers if needed
             },
         });
+
+         // Set success or failure message.
         setSuccess({ staus: response.status, message: "You have successfully purchased this item." })
+
+        // Send the data.
         return response.data
     }
     catch (e) {
-        console.log("Error")
+       
+         // Set success or failure message.
+         setSuccess({ staus: 400, message: "Some error occured please try again later." })
     }
 }
 
 async function addToCart(id, title, category, setSuccess) {
+
+    // Get the access token from the local storage.
     const accessToken = localStorage.getItem('access_token');
+
     try {
+        // Make a post request to add the product in the cart.
         const response = await axios.post(`${process.env.REACT_APP_BACKEND_PORT}/products/product-cart`, { id: id, title: title, category: category }, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
                 // Add other headers if needed
             },
         });
-
+        
+        // Set success or failure message.
         setSuccess({ staus: response.status, message: "You have successfully added the item to the cart." })
+
+        // Send the data.
         return response.data
     }
     catch (e) {
-        console.log("Error")
+        // Set success or failure message.
+        setSuccess({ staus: 400, message: "Some error occured please try again later." })
     }
 }
 

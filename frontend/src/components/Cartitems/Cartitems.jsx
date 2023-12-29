@@ -8,7 +8,7 @@ const CartItems = () => {
     const [successEvent, setSuccessEvent] = useState({
         status: 0,
         message: ""
-      })
+    })
     const [products, setProducts] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
 
@@ -42,7 +42,7 @@ const CartItems = () => {
             console.log({ cartItems: selectedProductsData })
             const accessToken = localStorage.getItem('access_token');
             // Make a request to the backend to add selected products to the cart
-            const response=await axios.post(`${process.env.REACT_APP_BACKEND_PORT}/products/multiple-product-order`, { products: selectedProductsData }, {
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_PORT}/products/multiple-product-order`, { products: selectedProductsData }, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                     // Add other headers if needed
@@ -50,10 +50,10 @@ const CartItems = () => {
             });
             if (response.status == 200) {
                 setSuccessEvent({
-                  status: 200,
-                  message: "The item has been successfully added to the cart"
+                    status: 200,
+                    message: "The item has been successfully Purchased."
                 })
-              }
+            }
             console.log('Selected products added to the cart');
         } catch (error) {
             console.error('Error adding products to the cart:', error);
@@ -71,38 +71,38 @@ const CartItems = () => {
     return (
         <>
 
-{successEvent.status === 200 && (
-        <div className="rounded-md bg-green-50 p-4 fixed top-0 w-full z-50">
-          <div className="flex">
-            <div className="flex-shrink-0">
-              <CheckCircleIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
-            </div>
-            <div className="ml-3">
-              <h3 className="text-sm font-medium text-green-800">Order completed</h3>
-              <div className="mt-2 text-sm text-green-700">
-                <p>{successEvent.message}</p>
-              </div>
-              <div className="mt-4">
-                <div className="-mx-2 -my-1.5 flex">
-                  <button
-                    type="button"
-                    className="rounded-md bg-green-50 px-2 py-1.5 text-sm font-medium text-green-800 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50"
-                  >
-                    View status
-                  </button>
-                  <button
-                    type="button"
-                    className="ml-3 rounded-md bg-green-50 px-2 py-1.5 text-sm font-medium text-green-800 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50"
-                    onClick={(e)=>{setSuccessEvent({status:0, message:""})}}
-                  >
-                    Dismiss
-                  </button>
+            {successEvent.status === 200 && (
+                <div className="rounded-md bg-green-50 p-4 fixed top-0 w-full z-50">
+                    <div className="flex">
+                        <div className="flex-shrink-0">
+                            <CheckCircleIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
+                        </div>
+                        <div className="ml-3">
+                            <h3 className="text-sm font-medium text-green-800">Order completed</h3>
+                            <div className="mt-2 text-sm text-green-700">
+                                <p>{successEvent.message}</p>
+                            </div>
+                            <div className="mt-4">
+                                <div className="-mx-2 -my-1.5 flex">
+                                    <button
+                                        type="button"
+                                        className="rounded-md bg-green-50 px-2 py-1.5 text-sm font-medium text-green-800 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50"
+                                    >
+                                        View status
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="ml-3 rounded-md bg-green-50 px-2 py-1.5 text-sm font-medium text-green-800 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50"
+                                        onClick={(e) => { setSuccessEvent({ status: 0, message: "" }) }}
+                                    >
+                                        Dismiss
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+            )}
 
 
             <div className="bg-white">
@@ -142,7 +142,7 @@ const CartItems = () => {
                         ))}
                     </div>
                     <button onClick={placeOrder} className="bg-black text-white rounded-md p-4">
-                       Place order
+                        Place order
                     </button>
                 </div>
             </div>
