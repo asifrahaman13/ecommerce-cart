@@ -63,13 +63,14 @@ products_router.post("/product-details", async (req, res) => {
 products_router.post("/product-cart", checkUserRegistration, async (req, res) => {
 
     try {
-        const { id, title, category } = req.body
+        const { id, title, category, image } = req.body
 
         const { email } = req.user;
         const CartItems = new SingleProduct({
             id: id,
             title: title,
-            category: category
+            category: category,
+            image: image
         })
 
         const user_data = await Product.findOne({ email })
@@ -96,6 +97,59 @@ products_router.post("/product-cart", checkUserRegistration, async (req, res) =>
             .json({ success: false, message: "Some error occured" });
     }
 })
+
+products_router.post("/multiple-product-cart", checkUserRegistration, async (req, res) => {
+    try {
+        const { cartItems } = req.body; // Modify to accept an array of items
+        const { email } = req.user;
+
+        // Validate that cartItems is an array
+        if (!Array.isArray(cartItems) || cartItems.length === 0) {
+            return res.status(400).json({ success: false, message: "Invalid cart items data" });
+        }
+
+        const user_data = await Product.findOne({ email });
+
+        if (user_data) {
+            // Add each item from the request to the user's cart
+            user_data.cartItems.push(...cartItems);
+            await user_data.save();
+            return res.json({ success: true, message: "The cart items were added successfully" });
+        } else {
+            const new_user_data = new Product({
+                email: email,
+                cartItems: cartItems,
+                placeOrder: []
+            });
+
+            await new_user_data.save();
+            return res.json({ success: true, message: "The cart items were added successfully" });
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ success: false, message: "Some error occurred" });
+    }
+});
+
+products_router.get("/all-cart-items", checkUserRegistration, async (req, res) => {
+    try {
+        const { email } = req.user;
+
+        // Find the user data based on the email
+        const user_data = await Product.findOne({ email });
+
+        if (user_data) {
+            // Return the cart items of the user
+            return res.json({ success: true, cartItems: user_data.cartItems });
+        } else {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ success: false, message: "Some error occurred" });
+    }
+});
+
 
 products_router.post("/product-order", checkUserRegistration, async (req, res) => {
 
@@ -133,5 +187,46 @@ products_router.post("/product-order", checkUserRegistration, async (req, res) =
             .json({ success: false, message: "Some error occured" });
     }
 })
+
+products_router.post("/multiple-product-order", checkUserRegistration, async (req, res) => {
+
+    try {
+        const { products } = req.body; // Assuming products is an array of products
+
+        if (!products || !Array.isArray(products) || products.length === 0) {
+            return res.status(400).json({ success: false, message: "Invalid request body" });
+        }
+
+        const { email } = req.user;
+        const orderItems = products.map(product => new SingleProduct({
+            id: product.id,
+            title: product.title,
+            category: product.category,
+            image: product.image
+        }));
+
+        const user_data = await Product.findOne({ email });
+
+        if (user_data) {
+            user_data.placeOrder.push(...orderItems);
+            await user_data.save();
+            return res.json({ success: true, message: "The items are ordered successfully" });
+        } else {
+            const new_user_data = new Product({
+                email: email,
+                placeOrder: orderItems,
+                cartItems: []
+            });
+            await new_user_data.save();
+            return res.json({ success: true, message: "The items are ordered successfully" });
+        }
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ success: false, message: "Some error occurred" });
+    }
+});
+
+
 
 export { products_router }

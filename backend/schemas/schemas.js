@@ -13,6 +13,9 @@ const productData = new Schema({
     category: {
         type: String,
     },
+    image:{
+        type: String,
+    }
 });
 
 // Create Mongoose schema for users
