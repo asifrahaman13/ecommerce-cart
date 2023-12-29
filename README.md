@@ -1,4 +1,4 @@
-# Doco
+# Sample E-commerce
 
 The tech stack used in the projects are as follows:
 
@@ -19,40 +19,6 @@ git clone https://github.com/asifrahaman13/cart.git
 
 </br>
 
-## CHATBOT BACKEND 
-
-Next enter into the backend directory.
-
-```
-cd chatbot-backend/
-```
-
-Create a virtual environment. 
-
-```
-virtualenv .venv
-```
-
-Activate the virtual environment. In unix based system like the Linux or Mac OS you can follow the following commands: 
-
-```
-source .venv/bin/activate
-```
-
-Now install the required dependencies.
-
-```
-pip install -r requirements.txt
-```
-
-**Next enter the data into the .env file.**
-
-Now run the backend server.
-
-```
-uvicorn main:app --reload --port=5000
-```
-</br>
 
 ## BACKEND 
 Next you need to run the backend application.
