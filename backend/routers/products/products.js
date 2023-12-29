@@ -34,7 +34,33 @@ products_router.get("/products", async (req, res) => {
     }
 })
 
-products_router.post("/place-cart", checkUserRegistration, async (req, res) => {
+// API to get all the products.
+products_router.post("/product-details", async (req, res) => {
+    const { id } = req.body
+    console.log(id)
+    try {
+        // Call the fake store API to get dummy products.
+        const products = await axios.get(`${FAKE_STORE_API}/products/${id}`)
+
+
+        // If the status code in 200 then return the products.
+        if (products.status === 200) {
+            return res.json(products.data)
+        }
+
+        // Return error message if there is any error. 
+        return res
+            .status(500)
+            .json({ success: false, message: "Some error occured." });
+    }
+    catch (err) {
+        return res
+            .status(500)
+            .json({ success: false, message: "Some error occured." });
+    }
+})
+
+products_router.post("/product-cart", checkUserRegistration, async (req, res) => {
 
     try {
         const { id, title, category } = req.body
@@ -51,18 +77,18 @@ products_router.post("/place-cart", checkUserRegistration, async (req, res) => {
         if (user_data) {
             user_data.cartItems.push(CartItems)
             await user_data.save()
-            return res.json({"message": "The cart item was successfully"})
+            return res.json({ "message": "The cart item was successfully" })
         }
-        else{
-            const new_user_data=new Product({
+        else {
+            const new_user_data = new Product({
                 email: email,
-                cartItems:CartItems,
-                placeOrder:[]
+                cartItems: CartItems,
+                placeOrder: []
             })
             await new_user_data.save()
-            return res.json({"message": "The cart item was successfully"})
+            return res.json({ "message": "The cart item was successfully" })
         }
-        
+
     }
     catch (err) {
         return res
@@ -71,7 +97,7 @@ products_router.post("/place-cart", checkUserRegistration, async (req, res) => {
     }
 })
 
-products_router.post("/place-order", checkUserRegistration, async (req, res) => {
+products_router.post("/product-order", checkUserRegistration, async (req, res) => {
 
     try {
         const { id, title, category } = req.body
@@ -88,18 +114,18 @@ products_router.post("/place-order", checkUserRegistration, async (req, res) => 
         if (user_data) {
             user_data.placeOrder.push(orderItems)
             await user_data.save()
-            return res.json({"message": "The item is ordered successfully"})
+            return res.json({ "message": "The item is ordered successfully" })
         }
-        else{
-            const new_user_data=new Product({
+        else {
+            const new_user_data = new Product({
                 email: email,
-                placeOrder:orderItems,
-                cartItems:[]
+                placeOrder: orderItems,
+                cartItems: []
             })
             new_user_data.save()
-            return res.json({"message": "TThe item is ordered successfully"})
+            return res.json({ "message": "TThe item is ordered successfully" })
         }
-        
+
     }
     catch (err) {
         return res
