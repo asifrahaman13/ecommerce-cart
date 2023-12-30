@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Products from '../Products/Products';
 import CartItems from '../Cartitems/Cartitems';
 import { NavLink } from 'react-router-dom';
@@ -7,6 +7,7 @@ import Footer from '../Footer/Footer';
 const Home = () => {
 
   const [component, setComponent] = useState("products");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 
   function handleChangeComponent(e) {
@@ -14,7 +15,18 @@ const Home = () => {
     console.log(e.target.name);
   }
 
+  useEffect(() => {
+    const accessToken = localStorage.getItem('access_token');
+    console.log(accessToken)
+    if (accessToken) {
+      setIsLoggedIn(true);
+    }
+  }, [])
 
+  function handleLogout() {
+    localStorage.removeItem('access_token');
+    window.location.href = "/"
+  }
 
   return (
     <>
@@ -29,18 +41,13 @@ const Home = () => {
           <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
             <button className="mr-5 hover:text-gray-900" name="products" onClick={(e) => { handleChangeComponent(e) }}>Products</button>
             <button className="mr-5 hover:text-gray-900" name="cartitems" onClick={(e) => { handleChangeComponent(e) }}>Cart Items</button>
-            <NavLink to="login" className="mr-5 hover:text-gray-900" >Login</NavLink>
-
+            {isLoggedIn == true ? <button to="login" className="mr-5 hover:text-gray-900" onClick={(e) => { handleLogout() }}>Logout</button> : <NavLink to="login" className="mr-5 hover:text-gray-900" >Login</NavLink>}
           </nav>
-
         </div>
       </header>
-
-
       {component == "products" && <Products />}
       {component == "cartitems" && <CartItems />}
       <Footer />
-
     </>
   )
 }

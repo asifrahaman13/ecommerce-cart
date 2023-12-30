@@ -56,7 +56,7 @@ user_signup_router.post("/signup", async (req, res) => {
 
 // Login API
 user_signup_router.post("/login", async (req, res) => {
-    console.log(req.body)
+    
     try {
         // Extract the email and the password from the body.
         var { email, password } = req.body;

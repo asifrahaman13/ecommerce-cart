@@ -36,7 +36,7 @@ async function getCartItems() {
 
 // Function to get information about a single product using the id. 
 async function getProduct(id) {
-    
+
     try {
         // Call the backend API to fetch the single product information.
         const response = await axios.post(`${process.env.REACT_APP_BACKEND_PORT}/products/product-details`, { id: id });
@@ -48,8 +48,8 @@ async function getProduct(id) {
     }
 }
 
-async function placeOrder(id, title, category, setSuccess) {
-  // Get the access token from the local storage.
+async function placeOrder(id, title, category, setSuccessEvent) {
+    // Get the access token from the local storage.
     const accessToken = localStorage.getItem('access_token');
 
     try {
@@ -60,20 +60,25 @@ async function placeOrder(id, title, category, setSuccess) {
             },
         });
 
-         // Set success or failure message.
-        setSuccess({ staus: response.status, message: "You have successfully purchased this item." })
-
+        if (response.status === 200) {
+            // Set success or failure message.
+            setSuccessEvent({ status: 200, message: "You have successfully purchased this item." })
+        }
+        else {
+            // Set success or failure message.
+            setSuccessEvent({ status: 400, message: "Something went wrong" })
+        }
         // Send the data.
         return response.data
     }
     catch (e) {
-       
-         // Set success or failure message.
-         setSuccess({ staus: 400, message: "Some error occured please try again later." })
+
+        // Set success or failure message.
+        setSuccessEvent({ status: 400, message: "Some error occured please try again later." })
     }
 }
 
-async function addToCart(id, title, category, setSuccess) {
+async function addToCart(id, title, category, setSuccessEvent) {
 
     // Get the access token from the local storage.
     const accessToken = localStorage.getItem('access_token');
@@ -86,16 +91,22 @@ async function addToCart(id, title, category, setSuccess) {
                 // Add other headers if needed
             },
         });
-        
-        // Set success or failure message.
-        setSuccess({ staus: response.status, message: "You have successfully added the item to the cart." })
+
+        if (response.status === 200) {
+            // Set success or failure message.
+            setSuccessEvent({ status: 200, message: "You have successfully purchased this item." })
+        }
+        else {
+            // Set success or failure message.
+            setSuccessEvent({ status: 400, message: "Something went wrong" })
+        }
 
         // Send the data.
         return response.data
     }
     catch (e) {
         // Set success or failure message.
-        setSuccess({ staus: 400, message: "Some error occured please try again later." })
+        setSuccessEvent({ status: 400, message: "Some error occured please try again later." })
     }
 }
 
