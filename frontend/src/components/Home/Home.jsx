@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Products from '../Products/Products';
 import CartItems from '../Cartitems/Cartitems';
+import Users from '../Users/Users';
 import { NavLink } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 
@@ -44,6 +45,7 @@ const Home = () => {
           <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
             <button className="mr-5 text-xl font-bold text-yellow-600" name="products" onClick={(e) => { handleChangeComponent(e) }}>Products</button>
             <button className="mr-5 text-xl font-bold text-yellow-600" name="cartitems" onClick={(e) => { handleChangeComponent(e) }}>Cart Items</button>
+            <button className="mr-5 text-xl font-bold text-yellow-600" name="users" onClick={(e) => { handleChangeComponent(e) }}>Users</button>
             {isLoggedIn == true ? <button to="login" className="mr-5 text-xl font-bold text-yellow-600" onClick={(e) => { handleLogout() }}>Logout</button> : <><NavLink to="login" className="mr-5 text-xl font-bold text-yellow-600" >Login</NavLink>
 
               <NavLink to="signup" className="mr-5 text-xl font-bold text-yellow-600" >Sign up</NavLink></>
@@ -53,6 +55,7 @@ const Home = () => {
       </header>
       {component == "products" && <Products />}
       {component == "cartitems" && <CartItems />}
+      {component == "users" && <Users />}
       <Footer />
     </>
   )

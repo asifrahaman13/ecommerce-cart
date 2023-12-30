@@ -25,8 +25,6 @@ const Signup = () => {
       ...prevUserdata,
       [e.target.name]: e.target.value
     }))
-    console.log(user_data)
-
   }
 
   async function handleUserData() {
@@ -42,7 +40,7 @@ const Signup = () => {
           localStorage.setItem('access_token', signed_in.data.accessToken)
         }
         if (signed_in.status === 200) {
-          window.location.href = '/';
+          window.location.href = '/login';
         }
       }
       else if (signed_in.status==203){

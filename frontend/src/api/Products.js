@@ -110,4 +110,15 @@ async function addToCart(id, title, category, setSuccessEvent) {
     }
 }
 
-export { getProducts, getProduct, placeOrder, addToCart, getCartItems }
+async function getAllUsers() {
+    try {
+        // Call the backend API to get all the products available.
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_PORT}/auth/users`);
+        return response
+    }
+    catch (e) {
+        console.log("Something went wrong")
+    }
+}
+
+export { getProducts, getProduct, placeOrder, addToCart, getCartItems,getAllUsers }

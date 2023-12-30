@@ -17,6 +17,7 @@ products_router.get("/products", async (req, res) => {
         // Call the fake store API to get dummy products.
         const products = await axios.get(`${FAKE_STORE_API}/products?limit=15`)
 
+
         // If the status code in 200 then return the products.
         if (products.status === 200) {
             return res.json(products.data)
