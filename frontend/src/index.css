@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Import the Inter font with specific subsets and display options */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap&subset=latin');
+
+/* Add other global styles if needed */
+body {
+  font-family: 'Inter', sans-serif;
+}

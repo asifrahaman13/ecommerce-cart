@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getCartItems } from '../../api/Products';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import { CheckCircleIcon } from '@heroicons/react/20/solid'
+import Notification from '../Notification/Notification';
 
 const CartItems = () => {
     const [successEvent, setSuccessEvent] = useState({
@@ -16,7 +16,7 @@ const CartItems = () => {
         async function fetchProducts() {
             try {
                 const productsData = await getCartItems();
-                console.log(productsData.cartItems)
+                
                 setProducts(productsData.cartItems);
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -54,7 +54,7 @@ const CartItems = () => {
                     message: "The item has been successfully Purchased."
                 })
             }
-            console.log('Selected products added to the cart');
+            
         } catch (error) {
             console.error('Error adding products to the cart:', error);
         }
@@ -71,39 +71,7 @@ const CartItems = () => {
     return (
         <>
 
-            {successEvent.status === 200 && (
-                <div className="rounded-md bg-green-50 p-4 fixed top-0 w-full z-50">
-                    <div className="flex">
-                        <div className="flex-shrink-0">
-                            <CheckCircleIcon className="h-5 w-5 text-green-400" aria-hidden="true" />
-                        </div>
-                        <div className="ml-3">
-                            <h3 className="text-sm font-medium text-green-800">Order completed</h3>
-                            <div className="mt-2 text-sm text-green-700">
-                                <p>{successEvent.message}</p>
-                            </div>
-                            <div className="mt-4">
-                                <div className="-mx-2 -my-1.5 flex">
-                                    <button
-                                        type="button"
-                                        className="rounded-md bg-green-50 px-2 py-1.5 text-sm font-medium text-green-800 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50"
-                                    >
-                                        View status
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="ml-3 rounded-md bg-green-50 px-2 py-1.5 text-sm font-medium text-green-800 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50"
-                                        onClick={(e) => { setSuccessEvent({ status: 0, message: "" }) }}
-                                    >
-                                        Dismiss
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-
+            <Notification setSuccessEvent={setSuccessEvent} successEvent={successEvent} />
 
             <div className="bg-white">
                 <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
