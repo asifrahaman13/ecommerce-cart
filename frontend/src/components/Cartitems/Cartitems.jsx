@@ -52,7 +52,7 @@ const CartItems = () => {
             
             // Get the access token from local storage.
             const accessToken = localStorage.getItem('access_token');
-            
+
             // Make a request to the backend to add selected products to the cart
             const response = await axios.post(`${process.env.REACT_APP_BACKEND_PORT}/products/multiple-product-order`, { products: selectedProductsData }, {
                 headers: {
@@ -92,6 +92,7 @@ const CartItems = () => {
                     <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                         {products != [] && products?.map((product) => (
                             <div key={product.id} className="group relative">
+                                 <p className="text-sm font-medium  bg-green-100 text-green-500 h-12 flex items-center p-2 rounded-xl mb-4">{product.category}</p>
                                 <NavLink className="group relative" to={`/single-product/${product.id}`}>
                                     <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                                         <img
