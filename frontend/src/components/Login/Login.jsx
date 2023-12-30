@@ -33,7 +33,7 @@ const Login = () => {
             if (signed_in.status == 200) {
                 setSuccessEvent({
                     status: 200,
-                    message: "Success"
+                    message: "You have logged in successfully"
                 })
                 if (signed_in.status == 200) {
                     localStorage.setItem('access_token', signed_in.data.accessToken)

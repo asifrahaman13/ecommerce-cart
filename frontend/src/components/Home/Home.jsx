@@ -23,7 +23,7 @@ const Home = () => {
       setIsLoggedIn(true);
     }
   }, [])
-  
+
   // Function to remove the access token from the local storage.
   function handleLogout() {
     localStorage.removeItem('access_token');
@@ -44,7 +44,10 @@ const Home = () => {
           <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
             <button className="mr-5 text-xl font-bold text-yellow-600" name="products" onClick={(e) => { handleChangeComponent(e) }}>Products</button>
             <button className="mr-5 text-xl font-bold text-yellow-600" name="cartitems" onClick={(e) => { handleChangeComponent(e) }}>Cart Items</button>
-            {isLoggedIn == true ? <button to="login" className="mr-5 text-xl font-bold text-yellow-600" onClick={(e) => { handleLogout() }}>Logout</button> : <NavLink to="login" className="mr-5 hover:text-gray-900" >Login</NavLink>}
+            {isLoggedIn == true ? <button to="login" className="mr-5 text-xl font-bold text-yellow-600" onClick={(e) => { handleLogout() }}>Logout</button> : <><NavLink to="login" className="mr-5 text-xl font-bold text-yellow-600" >Login</NavLink>
+
+              <NavLink to="signup" className="mr-5 text-xl font-bold text-yellow-600" >Sign up</NavLink></>
+            }
           </nav>
         </div>
       </header>
