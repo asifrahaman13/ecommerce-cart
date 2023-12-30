@@ -2,19 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { getAllUsers } from '../../api/Products'
 
 const Users = () => {
-
+    // Hook to handle the users who have registered.
     const [people, setPeople] = useState([])
 
     useEffect(() => {
+        // Call the getAllUsers method to get all the users registered in the store.
         async function getUsers() {
             const all_users = await getAllUsers()
-            setPeople(all_users.data)
-
+            setPeople(all_users.data) // Assing the data to the people array
         }
         getUsers()
     }, [])
-
-
 
     return (
         <>
@@ -26,7 +24,6 @@ const Users = () => {
                             A list of all the users who have created account in Mico.
                         </p>
                     </div>
-
                 </div>
                 <div className="mt-8 flow-root">
                     <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -46,20 +43,14 @@ const Users = () => {
                                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                             Profession
                                         </th>
-
-
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200 bg-white">
                                     {people.map((person) => (
-                                        <tr key={person.email}>
+                                        <tr key={person.email} className='hover:bg-gray-100'>
                                             <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
                                                 <div className="flex items-center">
-
-                                                    <div className="ml-4">
-                                                        <div className="font-medium text-gray-900">{person.fullName}</div>
-                                                        <div className="mt-1 text-gray-500">{person.email}</div>
-                                                    </div>
+                                                    <div className="font-medium text-gray-900">{person.fullName}</div>
                                                 </div>
                                             </td>
                                             <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
@@ -71,7 +62,6 @@ const Users = () => {
                                                 </span>
                                             </td>
                                             <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{person.profession}</td>
-
                                         </tr>
                                     ))}
                                 </tbody>

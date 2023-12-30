@@ -5,18 +5,25 @@ import axios from 'axios';
 import Notification from '../Notification/Notification';
 
 const CartItems = () => {
+    // Define useState hook to set the products which will be used later to render the products available.
+    const [products, setProducts] = useState([]);
+
+    // State to select the products available.
+    const [selectedProducts, setSelectedProducts] = useState([]);
+
+    // State to provide notifications to the users.
     const [successEvent, setSuccessEvent] = useState({
         status: 0,
         message: ""
     })
-    const [products, setProducts] = useState([]);
-    const [selectedProducts, setSelectedProducts] = useState([]);
 
+
+    // useEffect hook to fetch all the products which the user have choose to be in the cart before the page loads.
     useEffect(() => {
         async function fetchProducts() {
             try {
                 const productsData = await getCartItems();
-                
+
                 setProducts(productsData.cartItems);
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -24,14 +31,17 @@ const CartItems = () => {
         }
 
         fetchProducts();
-    }, []);
+    }, [products]);
 
     const placeOrder = async () => {
         try {
             // Extract id, title, and category for each selected product
-            console.log(selectedProducts)
             const selectedProductsData = selectedProducts.map((productId) => {
+
+                // Select the product based on the id.
                 const selectedProduct = products.find((product) => product.id === productId);
+
+                // Return the relevant id, title, category and the image. 
                 return {
                     id: selectedProduct.id,
                     title: selectedProduct.title,
@@ -39,8 +49,10 @@ const CartItems = () => {
                     image: selectedProduct.image
                 };
             });
-            console.log({ cartItems: selectedProductsData })
+            
+            // Get the access token from local storage.
             const accessToken = localStorage.getItem('access_token');
+            
             // Make a request to the backend to add selected products to the cart
             const response = await axios.post(`${process.env.REACT_APP_BACKEND_PORT}/products/multiple-product-order`, { products: selectedProductsData }, {
                 headers: {
@@ -54,7 +66,7 @@ const CartItems = () => {
                     message: "The item has been successfully Purchased."
                 })
             }
-            
+
         } catch (error) {
             console.error('Error adding products to the cart:', error);
         }

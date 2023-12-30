@@ -51,6 +51,7 @@ const Products = () => {
 
       // Get the access token from local storage.
       const accessToken = localStorage.getItem('access_token');
+      
       // Make a request to the backend to add selected products to the cart
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_PORT}/products/multiple-product-cart`, { cartItems: selectedProductsData }, {
         headers: {

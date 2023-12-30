@@ -121,4 +121,5 @@ async function getAllUsers() {
     }
 }
 
-export { getProducts, getProduct, placeOrder, addToCart, getCartItems,getAllUsers }
+// Export the functions.
+export { getProducts, getProduct, placeOrder, addToCart, getCartItems, getAllUsers }
