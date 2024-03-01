@@ -14,7 +14,7 @@ How to run the application?
 First clone the repository.
 
 ```
-git clone https://github.com/asifrahaman13/cart.git
+git clone https://github.com/asifrahaman13/ecommerce-cart.git
 ```
 
 </br>
